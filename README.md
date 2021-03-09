@@ -7,7 +7,7 @@ This organisation uses an OCR (Optical Caracter Recognition) system to extract f
 The aim of this project was to automatically associate to each ingredient list (retrieved by OCR) a product category.
 
 
-Data Source: Open Food Facts CSV of 800.000 products.
+Data Source: Open Food Facts CSV of xxxx products.
 
 Type of analysis:
 - Data Analysis to identify 37 categories of products and their occurences.
@@ -105,6 +105,8 @@ If you wish to use those OCR in production:
 - To use tesseract in production you will have to change the path.
   For example, our path was pytesseract.pytesseract.tesseract_cmd = '/usr/local/bin/tesseract' for a local usage and pytesseract.pytesseract.tesseract_cmd = ‘/app/.apt/usr/bin/tesseract’ in production
   To know more see: https://towardsdatascience.com/deploy-python-tesseract-ocr-on-heroku-bbcc39391a8d
+
+- We ended up using tesseract in a docker image
 
 
 
