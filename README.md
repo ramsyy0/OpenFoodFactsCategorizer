@@ -1,10 +1,20 @@
 # Data analysis
-- Document here the project: OpenFoodFacts
-- Description: Project Description
-- Data Source:
-- Type of analysis:
+OpenFoodFactsCategorizer
 
-Please document the project the better you can.
+Description:
+Open Food Facts is a food products database "made by everyone, for everyone".
+This organisation uses an OCR (Optical Caracter Recognition) system to extract from a photograph the text of a package's list of ingredients.
+The aim of this project was to automatically associate to each ingredient list (retrieved by OCR) a product category.
+
+
+Data Source: Open Food Facts CSV of 800.000 products.
+
+Type of analysis:
+- Data Analysis to identify 37 categories of products and their occurences.
+- Search for the best Machine Learning model to classify products automaticaly
+- Test for Deep Learning scores
+
+This project focus on french products. The model had been trained on french texts from OCR.
 
 # Startup the project
 
@@ -72,3 +82,7 @@ mkdir tmp
 cd tmp
 OpenFoodFacts-run
 ```
+
+# OCR test
+
+
