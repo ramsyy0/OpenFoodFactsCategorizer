@@ -8,5 +8,5 @@ data/
 **/__pycache__/
 *.egg-info
 *.csv
-*.ipynb
+#*.ipynb
 *.joblib
