@@ -1,0 +1,12 @@
+.coverage
+.ipynb_checkpoints
+.DS_Store
+.env
+raw_data/
+data/
+notebooks/
+**/__pycache__/
+*.egg-info
+*.csv
+*.ipynb
+*.joblib
