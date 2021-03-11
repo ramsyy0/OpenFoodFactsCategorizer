@@ -18,7 +18,7 @@ The aim of this project was to automatically associate to each ingredient list (
 
 This project focus on french products. The model had been trained on french texts from OCR.
 
-# 🔧 Startup the project
+# ⚒ Startup the project
 
 ## The initial setup.
 
@@ -98,7 +98,7 @@ Please, find the setup in the notebooks folder (OCR_setup.ipynb).
 
 Two OCR system were tested: tesseract and easyocr.
 
-## To understand how to custom parameters of teserract see:
+## To understand how to custom parameters of tesseract see:
 https://pypi.org/project/pytesseract/
 https://github.com/tesseract-ocr/tesseract/blob/master/doc/tesseract.1.asc#config-files-and-augmenting-with-user-data
 
