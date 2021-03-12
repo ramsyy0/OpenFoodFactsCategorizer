@@ -6,7 +6,7 @@ from sklearn.pipeline import Pipeline
 import joblib
 
 from OpenFoodFacts.helpers import list_categories
-from OpenFoodFacts.encoders import CustomPreprocessorNoSpellCheck
+from OpenFoodFacts.encoders import CustomPreprocessor
 from OpenFoodFacts.data import get_data
 
 class Trainer():
@@ -20,14 +20,14 @@ class Trainer():
     def create_pipeline(self):
     """Returns a full pipeline with preprocessing and model"""
         self.pipeline = Pipeline([
-            ("custom_preprocessor", CustomPreprocessorNoSpellCheck()),
+            ("custom_preprocessor", CustomPreprocessor()),
             ("tfidf", TfidfVectorizer(ngram_range=(2, 2), min_df=50)),
             # ("lsa", TruncatedSVD(n_components=2500)),
             ("model", RidgeClassifier())
         ])
-        
+
         return self.pipeline
-    
+
     def train_model(self, X_train, y_train):
     """Requires a created pipeline; Returns a trained pipeline"""
         self.pipeline.fit(X_train, y_train)
@@ -41,21 +41,21 @@ class Trainer():
                         scoring="accuracy",
                         n_jobs=-1) \
                     .mean()
-    
+
     def save_model(self, filename="model.joblib"):
     """Saves the current pipeline"""
         joblib.dump(self.pipeline, filename)
-        
+
         return None
 
     def predict(self, X_sample, threshold=0.012)
 
-        proba = self.pipeline.decision_function([X_sample])  
+        proba = self.pipeline.decision_function([X_sample])
         indices_max = np.argsort([-x for x in proba])
-        
+
         if (proba[indices_max[0]] - proba[indices_max[1]]) > threshold:
             return self.list_cat[indices_max[0]]
-        
+
         return {"class_1": self.list_cat[indices_max[0]],
                 "proba_1": proba[indices_max[0]],
                 "class_2": self.list_cat[indices_max[1]],
