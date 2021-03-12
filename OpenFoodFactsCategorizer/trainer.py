@@ -4,11 +4,12 @@ from sklearn.decomposition import TruncatedSVD
 from sklearn.linear_model import RidgeClassifier
 from sklearn.pipeline import Pipeline
 import joblib
-
-
+from sklearn.model_selection import train_test_split
+import nltk
+from nltk.corpus import stopwords
 from OpenFoodFactsCategorizer.helpers import list_categories
 from OpenFoodFactsCategorizer.encoders import CustomPreprocessor
-from OpenFoodFactsCategorizer.data import get_data
+from OpenFoodFactsCategorizer.data import get_data_from_text
 
 
 class Trainer():
@@ -25,7 +26,6 @@ class Trainer():
         stop_words = set(stopwords.words('french'))
         self.pipeline = Pipeline([
             ("custom_preprocessor", CustomPreprocessor()),
-
             ("tfidf", TfidfVectorizer(ngram_range=(2, 2), stop_words=stop_words)),
             ("ridge", RidgeClassifier())
         ])
@@ -34,9 +34,8 @@ class Trainer():
 
     def train_model(self, X_train, y_train):
         """Requires a created pipeline; Returns a trained pipeline"""
-        self.pipeline.fit(X_train, y_train)
 
-        return self.pipeline
+        return self.pipeline.fit(X_train, y_train)
 
     def evaluate_model(self, X_test, y_test):
         """Expects a trained pipeline; Returns a cross-validated score for the trained pipeline"""
@@ -66,8 +65,13 @@ class Trainer():
                 "proba_2": proba[indices_max[1]]}
 
 if __name__ == '__main__':
-    X_train, X_test, y_train, y_test = get_data_from_text()
-    Trainer().set_pipeline()
-    Trainer().train_model(X_train, y_train)
-    Trainer().evaluate_model(X_test, y_test)
-    Trainer().save_model()
+    df = get_data_from_text()
+    print(df.head())
+    X = df['clean_text']
+    y = df['pnns_groups_2']
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    trainer = Trainer()
+    trainer.create_pipeline()
+    trainer.train_model(X_train, y_train)
+    #trainer.evaluate_model(X_test, y_test)
+    #trainer.save_model()
