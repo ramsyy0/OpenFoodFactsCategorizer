@@ -97,7 +97,13 @@ We apply the following preprocessing:
 
 # Analyse the dataset
 
+We joined the OCR dataset with OFF full database using barcode as matching key to obtain product categories.
+We chose the "PNNS 2" columns, with 38 distinct categories. PNNS stands for "Programme national nutrition santé", categories have been established by the French Ministry of Health.
+
+
 # Train the model
+
+Best performance was obtained with a RidgeClassifier, which we kept.
 
 # 📸 OCR test
 
