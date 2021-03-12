@@ -9,6 +9,7 @@ import nltk
 from nltk.corpus import stopwords
 from OpenFoodFactsCategorizer.helpers import list_categories
 from OpenFoodFactsCategorizer.encoders import CustomPreprocessor
+from OpenFoodFactsCategorizer.data import get_data
 from OpenFoodFactsCategorizer.data import get_data_from_text
 
 
@@ -64,14 +65,10 @@ class Trainer():
                 "proba_2": proba[indices_max[1]]}
 
 if __name__ == '__main__':
-    df = get_data_from_text()
-    print(df.head())
-    X = df['clean_text']
-    y = df['pnns_groups_2']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    print(X_train.shape)
+    X_train, X_test, y_train, y_test = get_data_from_text()
+    #print(X_train)
     trainer = Trainer()
-    #trainer.create_pipeline()
-    #trainer.train_model(X_train.squeeze(), y_train)
-    #trainer.evaluate_model(X_test, y_test)
+    trainer.create_pipeline()
+    trainer.train_model(X_train, y_train)
+    trainer.evaluate_model(X_test, y_test)
     #trainer.save_model()
