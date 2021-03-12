@@ -34,7 +34,6 @@ class Trainer():
 
     def train_model(self, X_train, y_train):
         """Requires a created pipeline; Returns a trained pipeline"""
-
         return self.pipeline.fit(X_train, y_train)
 
     def evaluate_model(self, X_test, y_test):
@@ -70,8 +69,9 @@ if __name__ == '__main__':
     X = df['clean_text']
     y = df['pnns_groups_2']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+    print(X_train.shape)
     trainer = Trainer()
-    trainer.create_pipeline()
-    trainer.train_model(X_train, y_train)
+    #trainer.create_pipeline()
+    #trainer.train_model(X_train.squeeze(), y_train)
     #trainer.evaluate_model(X_test, y_test)
     #trainer.save_model()
