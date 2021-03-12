@@ -9,14 +9,14 @@ This organisation uses an OCR (Optical Caracter Recognition) system to extract f
 The aim of this project was to automatically associate to each ingredient list (retrieved by OCR) a product category.
 
 
-## Data Source: Open Food Facts CSV of 434 896 frenchs products.
+## Data Source: Open Food Facts CSV of 434 896 French products.
 
 ## Type of analysis:
-- Data Analysis to identify 37 categories of products and their occurences.
-- Search for the best Machine Learning model to classify products automaticaly
+- Data Analysis to identify 38 categories of products and their occurrences.
+- Search for the best Machine Learning model to classify products automatically
 - Test for Deep Learning scores
 
-This project focus on french products. The model had been trained on french texts from OCR.
+This project focuses on French products. The model had been trained on French texts from OCR.
 
 # ⚒ Startup the project
 
@@ -87,6 +87,14 @@ OpenFoodFacts-run
 
 # Clean the data
 
+We apply the following preprocessing:
+- remove punctuation
+- remove non alphabetical characters (numbers, special characters)
+- remove accentuated characters
+- remove extra spaces
+- remove stopwords
+- basic spellcheck with Levenshtein distance of 1 (optional)
+
 # Analyse the dataset
 
 # Train the model
@@ -107,7 +115,7 @@ https://pypi.org/project/easyocr/
 
 
 ## If you wish to use those OCR in production:
-- easyocr is very easy to use as it's name suggests, but it's also very heavy and may be to big for plateforms like Heroku (It may exceed
+- easyocr is very easy to use as its name suggests, but it's also very heavy and may be to big for plateforms like Heroku (It may exceed
   the slug size).
 
 - To use tesseract in production you will have to change the path.
