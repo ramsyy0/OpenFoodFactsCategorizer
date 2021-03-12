@@ -28,5 +28,7 @@ def get_data_from_text(n_rows=1000, path='../raw_data/ocr_labeled_1K.csv', holdo
     #X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state = 1)
     #return  X_train, X_test, y_train, y_test
 
-#if __name__ == '__main__':
-    #get_data()
+
+if __name__ == '__main__':
+    get_data_from_text()
+

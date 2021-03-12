@@ -5,9 +5,11 @@ from sklearn.linear_model import RidgeClassifier
 from sklearn.pipeline import Pipeline
 import joblib
 
+
 from OpenFoodFactsCategorizer.helpers import list_categories
 from OpenFoodFactsCategorizer.encoders import CustomPreprocessor
 from OpenFoodFactsCategorizer.data import get_data
+
 
 class Trainer():
 
@@ -23,8 +25,8 @@ class Trainer():
         stop_words = set(stopwords.words('french'))
         self.pipeline = Pipeline([
             ("custom_preprocessor", CustomPreprocessor()),
+
             ("tfidf", TfidfVectorizer(ngram_range=(2, 2), stop_words=stop_words)),
-            # ("lsa", TruncatedSVD(n_components=2500)),
             ("ridge", RidgeClassifier())
         ])
 
