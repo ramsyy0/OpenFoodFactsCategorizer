@@ -5,10 +5,10 @@ install_requirements:
 	@pip install -r requirements.txt
 
 check_code:
-	@flake8 scripts/* OpenFoodFacts/*.py
+	@flake8 scripts/* OpenFoodFactsCategorizer/*.py
 
 black:
-	@black scripts/* OpenFoodFacts/*.py
+	@black scripts/* OpenFoodFactsCategorizer/*.py
 
 test:
 	@coverage run -m pytest tests/*.py
@@ -22,8 +22,8 @@ clean:
 	@rm -f .coverage
 	@rm -fr */__pycache__ */*.pyc __pycache__
 	@rm -fr build dist
-	@rm -fr OpenFoodFacts-*.dist-info
-	@rm -fr OpenFoodFacts.egg-info
+	@rm -fr OpenFoodFactsCategorizer-*.dist-info
+	@rm -fr OpenFoodFactsCategorizer.egg-info
 
 install:
 	@pip install . -U

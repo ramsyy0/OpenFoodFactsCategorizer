@@ -24,3 +24,7 @@ s3fs
 six
 joblib
 termcolor
+nltk
+# Comment if you don't use spellcheker
+pyspellchecker
+
