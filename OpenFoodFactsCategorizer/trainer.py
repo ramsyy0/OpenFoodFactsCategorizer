@@ -1,14 +1,15 @@
-from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+import nltk
+from nltk.corpus import stopwords
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.decomposition import TruncatedSVD
 from sklearn.linear_model import RidgeClassifier
-from sklearn.pipeline import Pipeline
+from sklearn.model_selection import cross_val_score
 import joblib
-from sklearn.model_selection import train_test_split
-import nltk
-from nltk.corpus import stopwords
 from OpenFoodFactsCategorizer.helpers import list_categories
 from OpenFoodFactsCategorizer.encoders import CustomPreprocessor
+from OpenFoodFactsCategorizer.data import get_data
 from OpenFoodFactsCategorizer.data import get_data_from_text
 
 
@@ -35,7 +36,9 @@ class Trainer():
     def train_model(self):
         """Requires a created pipeline; Returns a trained pipeline"""
         self.create_pipeline()
-        self.pipeline.fit(self.X, self.y)
+
+        return self.pipeline.fit(self.X, self.y)
+
 
     def evaluate_model(self, X_test, y_test):
         """Expects a trained pipeline; Returns a cross-validated score for the trained pipeline"""
@@ -45,7 +48,7 @@ class Trainer():
                         n_jobs=-1) \
                     .mean()
 
-    def save_model(self, filename="model.joblib"):
+    def save_model(self, filename="model2.joblib"):
         """Saves the current pipeline"""
         joblib.dump(self.pipeline, filename)
 
@@ -65,15 +68,11 @@ class Trainer():
                 "proba_2": proba[indices_max[1]]}
 
 if __name__ == '__main__':
-    df = get_data_from_text()
-    print('Load df : done')
-    X = df['clean_text']
-    y = df['pnns_groups_2']
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    print('Train test split: done')
+
+
+    X_train, X_test, y_train, y_test = get_data_from_text()
     trainer = Trainer(X=X_train, y=y_train)
-    print('Instantiate Trainer')
     trainer.train_model()
-    print('Train model: done')
-    print(trainer.evaluate_model(X_test, y_test))
-    #trainer.save_model()
+    trainer.evaluate_model(X_test, y_test)
+    trainer.save_model()
+
