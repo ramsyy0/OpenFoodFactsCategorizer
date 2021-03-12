@@ -12,12 +12,12 @@ def get_data(path):
 
     return df
 
-def get_data_from_text(n_rows=1000, path='raw_data/ocr_labeled_1K.csv', holdout=0.3):
+def get_data_from_text(n_rows=20000, path='raw_data/ocr_labeled.csv', holdout=0.3):
     """Expects a path to a csv with ocr text and labels; Returns splitted train-test data"""
     # ADD JSON TO CSV
 
     #df = pd.read_csv(f"{path}/ocr_labeled_spellcheck.csv", nrows=n_rows)
-    df = pd.read_csv(path)
+    df = pd.read_csv(path, nrows=n_rows)
 
     #X = #???
     #y = #???
@@ -33,4 +33,4 @@ def get_data_from_text(n_rows=1000, path='raw_data/ocr_labeled_1K.csv', holdout=
 if __name__ == '__main__':
     get_data_from_text()
 
-#Coucou c'est Aoife ! Bisous bisous 
+#Coucou c'est Aoife ! Bisous bisous
