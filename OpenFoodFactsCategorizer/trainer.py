@@ -14,8 +14,10 @@ from OpenFoodFactsCategorizer.data import get_data_from_text
 
 class Trainer():
 
-    def __init__(self):
+    def __init__(self, X, y):
         self.pipeline = None
+        self.X = X
+        self.y = y
         self.list_cat = list_categories
 
         #return self
@@ -25,17 +27,15 @@ class Trainer():
         nltk.download('stopwords')
         stop_words = set(stopwords.words('french'))
         self.pipeline = Pipeline([
-            ("custom_preprocessor", CustomPreprocessor()),
+            #("custom_preprocessor", CustomPreprocessor()),
             ("tfidf", TfidfVectorizer(ngram_range=(2, 2), stop_words=stop_words)),
             ("ridge", RidgeClassifier())
         ])
 
-        return self.pipeline
-
-    def train_model(self, X_train, y_train):
+    def train_model(self):
         """Requires a created pipeline; Returns a trained pipeline"""
-
-        return self.pipeline.fit(X_train, y_train)
+        self.create_pipeline()
+        self.pipeline.fit(self.X, self.y)
 
     def evaluate_model(self, X_test, y_test):
         """Expects a trained pipeline; Returns a cross-validated score for the trained pipeline"""
@@ -66,12 +66,14 @@ class Trainer():
 
 if __name__ == '__main__':
     df = get_data_from_text()
-    print(df.head())
+    print('Load df : done')
     X = df['clean_text']
     y = df['pnns_groups_2']
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
-    trainer = Trainer()
-    trainer.create_pipeline()
-    trainer.train_model(X_train, y_train)
-    #trainer.evaluate_model(X_test, y_test)
+    print('Train test split: done')
+    trainer = Trainer(X=X_train, y=y_train)
+    print('Instantiate Trainer')
+    trainer.train_model()
+    print('Train model: done')
+    print(trainer.evaluate_model(X_test, y_test))
     #trainer.save_model()
