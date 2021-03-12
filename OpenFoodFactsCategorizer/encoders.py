@@ -14,15 +14,17 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
 #TO DO:
 
     def __init__(self):
-        pass
+        return None
+
 
     def fit(self, X, y=None):
-        """Required for sklearn compatibility; Checking NLTK requirements for transform"""
-        #stop_words = set(stopwords.words('french'))
-        return self
+         """Required for sklearn compatibility; Checking NLTK requirements for transform"""
+         #stop_words = set(stopwords.words('french'))
+         return self
 
     def transform(self, X, y=None):
-        """Expects a Dataframe of text; Returns a DataFrame of transformed text"""
+         """Expects a Dataframe of text; Returns a DataFrame of transformed text"""
+         return self
 
     def remove_punc(text):
         """Expects a string; Returns a string without punctuation"""
@@ -54,15 +56,6 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
         """Expects a string; Returns a string without accentuated characters"""
         return ''.join(c for c in unicodedata.normalize('NFKD', text)
                         if unicodedata.category(c) != 'Mn')
-
-    # def remove_stopwords(text):
-    #     tokenized = word_tokenize(text)
-    #     words_only = [word for word in tokenized if word.isalpha()]
-    #     stop_words = set(stopwords.words('french')) # Make stopword list
-    #     without_stopwords = [word for word in words_only if not word in stop_words] # Remove Stop Words
-    #     lemma=WordNetLemmatizer() # Initiate Lemmatizer
-    #     lemmatized = [lemma.lemmatize(word) for word in without_stopwords] # Lemmatize
-    #     return lemmatized
 
     def clean_ocr_text(text, spellcheck=SpellChecker):
         """Expects a string; Returns a string without punctuation, non-alphanum characters, spelling mistakes"""
