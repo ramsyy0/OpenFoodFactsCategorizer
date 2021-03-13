@@ -21,6 +21,7 @@ class Trainer():
         self.y = y
         self.list_cat = list_categories
 
+
         #return self
 
     def create_pipeline(self):
@@ -28,7 +29,7 @@ class Trainer():
         nltk.download('stopwords')
         stop_words = set(stopwords.words('french'))
         self.pipeline = Pipeline([
-            #("custom_preprocessor", CustomPreprocessor()),
+            ("custom_preprocessor", CustomPreprocessor()),
             ("tfidf", TfidfVectorizer(ngram_range=(2, 2), stop_words=stop_words)),
             ("ridge", RidgeClassifier())
         ])

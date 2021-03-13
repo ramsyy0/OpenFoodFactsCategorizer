@@ -16,7 +16,6 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
     def __init__(self):
         return None
 
-
     def fit(self, X, y=None):
          """Required for sklearn compatibility; Checking NLTK requirements for transform"""
          #stop_words = set(stopwords.words('french'))
@@ -24,6 +23,9 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
 
     def transform(self, X, y=None):
          """Expects a Dataframe of text; Returns a DataFrame of transformed text"""
+         X = X.apply(lambda x: self.clean_ocr_text(x, spellcheck=None))
+         return X
+
          return self
 
     def remove_punc(text):
@@ -31,7 +33,10 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
         for punctuation in string.punctuation:
             text = text.replace(punctuation, ' ')
             text = re.sub(" +", " ", text)
-            return text
+        return text
+
+    def remove_specialchar(text):
+        return ''.join(word for word in text if word.isalpha() or word == ' ')
 
     def remove_nonalpha(text):
         """Expects a string; Returns a string without non alphanumeric characters"""
@@ -57,18 +62,21 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
         return ''.join(c for c in unicodedata.normalize('NFKD', text)
                         if unicodedata.category(c) != 'Mn')
 
-    def clean_ocr_text(text, spellcheck=SpellChecker):
+    def clean_ocr_text(text, spellcheck=None):
         """Expects a string; Returns a string without punctuation, non-alphanum characters, spelling mistakes"""
         text = text.lower().replace('\n',' ')
 
         if spellcheck:
-            clean_funcs = [remove_punc, remove_nonalpha, corrected, remove_accents]
+            clean_funcs = [CustomPreprocessor.remove_punc, CustomPreprocessor.remove_nonalpha, CustomPreprocessor.corrected, CustomPreprocessor.remove_accents]
         else:
-            clean_funcs = [remove_punc, remove_nonalpha, remove_accents]
+            clean_funcs = [CustomPreprocessor.remove_punc, CustomPreprocessor.remove_nonalpha, CustomPreprocessor.remove_accents]
 
         for func in clean_funcs:
             text = func(text)
         return text.strip(" ")
 
-        X = X.apply(lambda x: clean_ocr_text(x, spellcheck=False))
-        return X
+        # X = X.apply(lambda x: clean_ocr_text(x, spellcheck=False))
+        # return X
+
+#print(CustomPreprocessor.clean_ocr_text('oeufs, \n, 9, lait, poulet', spellcheck=None))
+#print(CustomPreprocessor.remove_nonalpha('oeufs, 9; ..lait, poulet, éléé.'))
