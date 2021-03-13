@@ -37,7 +37,9 @@ class Trainer():
     def train_model(self):
         """Requires a created pipeline; Returns a trained pipeline"""
         self.create_pipeline()
+
         return self.pipeline.fit(self.X, self.y)
+
 
     def evaluate_model(self, X_test, y_test):
         """Expects a trained pipeline; Returns a cross-validated score for the trained pipeline"""
@@ -67,6 +69,7 @@ class Trainer():
                 "proba_2": proba[indices_max[1]]}
 
 if __name__ == '__main__':
+
 
     X_train, X_test, y_train, y_test = get_data_from_text()
     trainer = Trainer(X=X_train, y=y_train)
