@@ -1,26 +1,26 @@
 
 
-# 📈 Data analysis
+## 📈 Data analysis
 
 
-## Description:
+### Description:
 Open Food Facts is a food products database "made by everyone, for everyone".
 This organisation uses an OCR (Optical Caracter Recognition) system to extract from a photograph the text of a package's list of ingredients.
 The aim of this project was to automatically associate to each ingredient list (retrieved by OCR) a product category.
 
 
-## Data Source: Open Food Facts CSV of 434 896 French products.
+### Data Source: Open Food Facts CSV of 434 896 French products.
 
-## Type of analysis:
+### Type of analysis:
 - Data Analysis to identify 38 categories of products and their occurrences.
 - Search for the best Machine Learning model to classify products automatically
 - Test for Deep Learning scores
 
 This project focuses on French products. The model had been trained on French texts from OCR.
 
-# ⚒ Startup the project
+## ⚒ Startup the project
 
-## The initial setup.
+### The initial setup.
 
 Create virtualenv and install the project:
 ```bash
@@ -29,7 +29,7 @@ deactivate; virtualenv ~/venv ; source ~/venv/bin/activate ;\
     pip install pip -U; pip install -r requirements.txt
 ```
 
-## Unittest test:
+### Unittest test:
 ```bash
 make clean install test
 ```
@@ -47,7 +47,7 @@ git push -u origin master
 git push -u origin --tags
 ```
 
-## Functionnal test with a script:
+### Functionnal test with a script:
 
 ```bash
 cd
@@ -56,19 +56,19 @@ cd tmp
 OpenFoodFacts-run
 ```
 
-# 👩🏻‍💻 Install
+## 👩🏻‍💻 Install
 
 Go to `https://github.com/{group}/OpenFoodFacts` to see the project, manage issues,
 setup you ssh public key, ...
 
-## Create a python3 virtualenv and activate it:
+### Create a python3 virtualenv and activate it:
 
 ```bash
 sudo apt-get install virtualenv python-pip python-dev
 deactivate; virtualenv -ppython3 ~/venv ; source ~/venv/bin/activate
 ```
 
-## Clone the project and install it:
+### Clone the project and install it:
 
 ```bash
 git clone git@github.com:{group}/OpenFoodFacts.git
@@ -76,7 +76,7 @@ cd OpenFoodFacts
 pip install -r requirements.txt
 make clean install test                # install and test
 ```
-## Functionnal test with a script:
+### Functionnal test with a script:
 
 ```bash
 cd
@@ -85,7 +85,7 @@ cd tmp
 OpenFoodFacts-run
 ````
 
-# Clean the data
+## Clean the data
 
 We apply the following preprocessing:
 - remove punctuation
@@ -95,32 +95,39 @@ We apply the following preprocessing:
 - remove stopwords
 - basic spellcheck with Levenshtein distance of 1 (optional)
 
-# Analyse the dataset
+## Analyse the dataset
 
 We joined the OCR dataset with OFF full database using barcode as matching key to obtain product categories.
 We chose the "PNNS 2" columns, with 38 distinct categories. PNNS stands for "Programme national nutrition santé", categories have been established by the French Ministry of Health.
 
 
-# Train the model
+## 🏋🏻 Train the model
 
-Best performance was obtained with a RidgeClassifier, which we kept.
+Several models have been tried, the most efficient is a Ridge Classifier, associated with a TF_IDF, with the n_grams 2 and the French NLTK stop_words as parameters.
 
-# 📸 OCR test
+Various preprocessing treatments on the text have been tested, for example:
+- Stopwords and French Lemmatizer from Spacy
+- Spellcheck to correct the spelling of the OCR
+
+However, the above-mentioned Pipeline obtains the best results (84% accuracy, balanced over classes) on text that is simply cleaned up (accents, special characters, spaces, numbers, etc.)
+You can see three of these training tests and their results in the notebooks.
+
+## 📸 OCR test
 
 To test our categorizer with new data we have implemented an OCR system.
 Please, find the setup in the notebooks folder (OCR_setup.ipynb).
 
 Two OCR system were tested: tesseract and easyocr.
 
-## To understand how to custom parameters of tesseract see:
+### To understand how to custom parameters of tesseract see:
 https://pypi.org/project/pytesseract/
 https://github.com/tesseract-ocr/tesseract/blob/master/doc/tesseract.1.asc#config-files-and-augmenting-with-user-data
 
-## Easy OCR doesn't need custom config:
+### Easy OCR doesn't need custom config:
 https://pypi.org/project/easyocr/
 
 
-## If you wish to use those OCR in production:
+### If you wish to use those OCR in production:
 - easyocr is very easy to use as its name suggests, but it's also very heavy and may be to big for plateforms like Heroku (It may exceed
   the slug size).
 

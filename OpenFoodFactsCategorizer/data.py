@@ -7,12 +7,14 @@ def get_data_from_image():
     """If OCR integrated, Expects a path to a folder with images and get ocr text for each of them"""
     pass
 
-def get_data(path='raw_data/ocr_labeled_reduced.csv'):
+def get_data(path='.'):
+    #change the path in parameters
     df = pd.read_csv(path)
 
     return df
 
-def get_data_from_text(n_rows=100000, path='raw_data/ocr_labeled_reduced.csv', holdout=0.3):
+def get_data_from_text(path='.', holdout=0.3):
+      #change the path in parameters
     """Expects a path to a csv with ocr text and labels; Returns splitted train-test data"""
     # ADD JSON TO CSV
 
