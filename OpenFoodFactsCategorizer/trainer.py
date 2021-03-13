@@ -22,8 +22,6 @@ class Trainer():
         self.list_cat = list_categories
 
 
-        #return self
-
     def create_pipeline(self):
         """Returns a full pipeline with preprocessing and model"""
         nltk.download('stopwords')
@@ -50,27 +48,13 @@ class Trainer():
                     .mean()
 
     def save_model(self, filename="model2.joblib"):
-        """Saves the current pipeline"""
+        """Saves the current pipeline if needed"""
         joblib.dump(self.pipeline, filename)
 
         return None
 
-    def predict(self, X_sample, threshold=0.012):
-
-        proba = self.pipeline.decision_function([X_sample])
-        indices_max = np.argsort([-x for x in proba])
-
-        if (proba[indices_max[0]] - proba[indices_max[1]]) > threshold:
-            return self.list_cat[indices_max[0]]
-
-        return {"class_1": self.list_cat[indices_max[0]],
-                "proba_1": proba[indices_max[0]],
-                "class_2": self.list_cat[indices_max[1]],
-                "proba_2": proba[indices_max[1]]}
-
 if __name__ == '__main__':
-
-
+    # choose which steps are needed
     X_train, X_test, y_train, y_test = get_data_from_text()
     trainer = Trainer(X=X_train, y=y_train)
     trainer.train_model()
