@@ -12,7 +12,7 @@ def get_data(path='raw_data/ocr_labeled_reduced.csv'):
 
     return df
 
-def get_data_from_text(n_rows=20000, path='raw_data/ocr_labeled_reduced.csv', holdout=0.3):
+def get_data_from_text(n_rows=20000, path='raw_data/ocr_labeled_1K.csv', holdout=0.3):
     """Expects a path to a csv with ocr text and labels; Returns splitted train-test data"""
     # ADD JSON TO CSV
 
