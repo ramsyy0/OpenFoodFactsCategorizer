@@ -11,8 +11,6 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
 # TransformerMixin generates a fit_transform method from fit and transform
 # BaseEstimator generates get_params and set_params methods
 
-#TO DO:
-
     def __init__(self):
         return None
 
@@ -61,11 +59,13 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
         """Expects a string; Returns a string without accentuated characters"""
         return ''.join(c for c in unicodedata.normalize('NFKD', text)
                         if unicodedata.category(c) != 'Mn')
-
+    @staticmethod
     def clean_ocr_text(text, spellcheck=None):
         """Expects a string; Returns a string without punctuation, non-alphanum characters, spelling mistakes"""
+        #lower and \n remover
         text = text.lower().replace('\n',' ')
 
+        #choice to spellcheck or not
         if spellcheck:
             clean_funcs = [CustomPreprocessor.remove_punc, CustomPreprocessor.remove_nonalpha, CustomPreprocessor.corrected, CustomPreprocessor.remove_accents]
         else:
@@ -74,9 +74,3 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
         for func in clean_funcs:
             text = func(text)
         return text.strip(" ")
-
-        # X = X.apply(lambda x: clean_ocr_text(x, spellcheck=False))
-        # return X
-
-#print(CustomPreprocessor.clean_ocr_text('oeufs, \n, 9, lait, poulet', spellcheck=None))
-#print(CustomPreprocessor.remove_nonalpha('oeufs, 9; ..lait, poulet, éléé.'))
