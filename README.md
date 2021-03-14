@@ -86,15 +86,6 @@ cd tmp
 OpenFoodFacts-run
 ````
 
-## 🚿 Clean the data
-
-We apply the following preprocessing:
-- remove punctuation
-- remove non alphabetical characters (numbers, special characters)
-- remove accentuated characters
-- remove extra spaces
-- basic spellcheck with Levenshtein distance of 1 (optional)
-
 ## 🔍 Analyse the dataset
 
 Open food facts uses an OCR system to extract text from photos of products taken by their contributors (OCR).
@@ -102,6 +93,16 @@ The organisation provided us with a dataset of 795,609 OCRs of ingredients in Fr
 We matched these OCRs to the corresponding products in their database (thanks to the codebar) to to find their categories (our y for machine learning).
 We choosed to work on the "PNNS 2" column which contains 38 distinct categories of products. PNNS stands for "Programme national nutrition santé", categories have been established by the French Ministry of Health.
 The names of the categories were also cleaned to eliminate duplicates due to different spellings or the use of capital letters.
+
+
+## 🚿 Clean the data
+
+We We have applied the following preprocessing:
+- remove punctuation
+- remove non alphabetical characters (numbers, special characters)
+- remove accentuated characters
+- remove extra spaces
+- basic spellcheck with Levenshtein distance of 1 (optional)
 
 
 ## 🏋🏻 Train the model
