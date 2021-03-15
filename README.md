@@ -59,7 +59,7 @@ OpenFoodFacts-run
 
 ## 👩🏻‍💻 Install
 
-Go to `https://github.com/{group}/OpenFoodFacts` to see the project, manage issues,
+Go to `https://github.com/ramsyy0/OpenFoodFacts` to see the project, manage issues,
 setup you ssh public key, ...
 
 ### Create a python3 virtualenv and activate it:
@@ -72,7 +72,7 @@ deactivate; virtualenv -ppython3 ~/venv ; source ~/venv/bin/activate
 ### Clone the project and install it:
 
 ```bash
-git clone git@github.com:{group}/OpenFoodFacts.git
+git clone git@github.com:ramsyy0/OpenFoodFacts.git
 cd OpenFoodFacts
 pip install -r requirements.txt
 make clean install test                # install and test
