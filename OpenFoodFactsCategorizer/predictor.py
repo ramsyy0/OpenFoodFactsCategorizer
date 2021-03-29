@@ -1,32 +1,58 @@
 import joblib
 import numpy as np
 from OpenFoodFactsCategorizer.helpers import list_categories
+from OpenFoodFactsCategorizer.cleaner import Cleaner
+from OpenFoodFactsCategorizer.data import get_data_from_ocr
 
 
-def predict(path, X_sample, threshold=0.012):
-    """ This function return the prediction for a given OCR"""
+class Predictor():
 
-    model = joblib.load(path)
-    list_cat = list_categories
-    d = model.decision_function([X_sample])
-    probabilities = [np.exp(x) / np.sum(np.exp(d)) for x in d]
-    proba = list(probabilities[0])
-    indices_max = np.argsort([-x for x in proba])
+    model = None
 
-    """ This function return the prediction for a given OCR. if
-    the probalité between the first and the second class is > thresold, it
-    return directly the category. If not, the model return the two categories
-     between which it hesitate"""
-
-    if (proba[indices_max[0]] - proba[indices_max[1]]) > threshold:
-        return list_cat[indices_max[0]]
-    else:
-
-        return {"class_1": list_cat[indices_max[0]],
-                "proba_1": proba[indices_max[0]],
-                "class_2": list_cat[indices_max[1]],
-                "proba_2": proba[indices_max[1]]}
+    """ get text from json OCR """
+    text = get_data_from_ocr('https://static.openfoodfacts.org/images/products/00390804/1.json')
+    """ apply the same preprocessing than the model (but with a different class
+    from encoders because whe don't apply thos prepricesses to a dataframe)"""
+    cleaner = Cleaner()
+    text = cleaner.clean_ocr_text(text=text, spellcheck=None)
 
 
+    def __init__(self, text):
+        self.text = text
 
 
+    def load_model(self):
+        if Predictor.model is None:
+            # change the path whith your model name and location
+            Predictor.model = joblib.load('bestridge.joblib')
+        self.model = Predictor.model
+
+
+    def predict(self, threshold=0.012):
+        """ This function return the prediction for a given OCR. if
+        the probalité between the first and the second class is > thresold, it
+        return directly the category. If not, the model return the two categories
+        between which it hesitate"""
+        list_cat = list_categories
+        print(self.text)
+        d = self.model.decision_function([self.text])
+        probabilities = [np.exp(x) / np.sum(np.exp(d)) for x in d]
+        proba = list(probabilities[0])
+        indices_max = np.argsort([-x for x in proba])
+
+        if (proba[indices_max[0]] - proba[indices_max[1]]) > threshold:
+            return list_cat[indices_max[0]]
+        else:
+             return {"proba_1": list_cat[indices_max[0]],
+                     "confidence_1": round(proba[indices_max[0]], 4),
+                     "proba_2": list_cat[indices_max[1]],
+                    "confidence_2": round(proba[indices_max[1]], 4)}
+
+
+
+
+if __name__ == '__main__':
+
+    #predictor = Predictor(text=Predictor.text)
+    #predictor.load_model()
+    #print(predictor.predict(threshold=0.012))

@@ -1,12 +1,21 @@
 import os
 import pandas as pd
+import requests
+
 from sklearn.model_selection import train_test_split
 
 
-def get_data_from_image():
-    """If OCR integrated, Expects a path to a folder with images and get ocr text for each of them"""
-    pass
+# Get data to use our ridge model
 
+def get_data_from_ocr(url):
+    """Expects url to a json ocr -from image- """
+    result = requests.get(url)
+    json = result.json()
+    text = json['responses'][0]['fullTextAnnotation']['text']
+    return text
+
+
+### Get data to train a new model
 
 def get_data(path='.'):
     # set the path in parameters
@@ -16,7 +25,8 @@ def get_data(path='.'):
 
 def get_data_from_text(path='.', holdout=0.3):
     # set the path in parameters
-    """Expects a path to a csv with ocr text and labels; Returns splitted train-test data"""
+    """To train a new model.
+    Expects a path to a csv with ocr text and labels; Returns splitted train-test data"""
     df = pd.read_csv(path)
     #X = #???
     #y = #???
@@ -29,4 +39,4 @@ def get_data_from_text(path='.', holdout=0.3):
 
 
 #if __name__ == '__main__':
-
+#print(get_data_from_ocr('https://static.openfoodfacts.org/images/products/00390804/1.json'))
