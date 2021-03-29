@@ -34,7 +34,6 @@ class Predictor():
         return directly the category. If not, the model return the two categories
         between which it hesitate"""
         list_cat = list_categories
-        print(self.text)
         d = self.model.decision_function([self.text])
         probabilities = [np.exp(x) / np.sum(np.exp(d)) for x in d]
         proba = list(probabilities[0])
@@ -51,7 +50,7 @@ class Predictor():
 
 
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
 
     #predictor = Predictor(text=Predictor.text)
     #predictor.load_model()

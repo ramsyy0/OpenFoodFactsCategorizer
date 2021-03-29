@@ -63,7 +63,7 @@ class Cleaner():
             text = func(text)
         return text.strip(" ")
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
 
     #cleaner = Cleaner()
     #print(cleaner.clean_ocr_text(text="oeuf, viande", spellcheck=None))
