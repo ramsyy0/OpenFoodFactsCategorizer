@@ -11,8 +11,9 @@ class Predictor():
 
     """ get text from json OCR """
     text = get_data_from_ocr('https://static.openfoodfacts.org/images/products/00390804/1.json')
-    """ apply the same preprocessing than the model (but with a different class
-    from encoders because whe don't apply thos prepricesses to a dataframe)"""
+
+    """ applies the same preprocessing as the model (but with a different class because it is a string and not a
+     dataframe)"""
     cleaner = Cleaner()
     text = cleaner.clean_ocr_text(text=text, spellcheck=None)
 
