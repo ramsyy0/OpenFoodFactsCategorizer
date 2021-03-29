@@ -25,7 +25,7 @@ class Predictor():
     def load_model(self):
         if Predictor.model is None:
             # change the path whith your model name and location
-            Predictor.model = joblib.load('bestridge.joblib')
+            Predictor.model = joblib.load('../model2.joblib')
         self.model = Predictor.model
 
 
