@@ -30,10 +30,9 @@ class Predictor():
 
 
     def predict(self, threshold=0.012):
-        """ This function return the prediction for a given OCR. if
-        the probalité between the first and the second class is > thresold, it
-        return directly the category. If not, the model return the two categories
-        between which it hesitate"""
+        """ This function returns the prediction for a given OCR. If > thresold, it
+        returns directly the category. If not, the model returns the two categories
+        between which it hesitates"""
         list_cat = list_categories
         d = self.model.decision_function([self.text])
         probabilities = [np.exp(x) / np.sum(np.exp(d)) for x in d]
