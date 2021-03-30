@@ -7,24 +7,11 @@ import pandas as pd
 import nltk
 
 # Transformer with SpellCheck
-class CustomPreprocessor(TransformerMixin, BaseEstimator):
-# TransformerMixin generates a fit_transform method from fit and transform
-# BaseEstimator generates get_params and set_params methods
+class Cleaner():
+
 
     def __init__(self):
         return None
-
-    def fit(self, X, y=None):
-         """Required for sklearn compatibility; Checking NLTK requirements for transform"""
-         #stop_words = set(stopwords.words('french'))
-         return self
-
-    def transform(self, X, y=None):
-         """Expects a Dataframe of text; Returns a DataFrame of transformed text"""
-         X = X.apply(lambda x: self.clean_ocr_text(x, spellcheck=None))
-         return X
-
-         return self
 
     def remove_punc(text):
         """Expects a string; Returns a string without punctuation"""
@@ -59,6 +46,7 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
         """Expects a string; Returns a string without accentuated characters"""
         return ''.join(c for c in unicodedata.normalize('NFKD', text)
                         if unicodedata.category(c) != 'Mn')
+
     @staticmethod
     def clean_ocr_text(text, spellcheck=None):
         """Expects a string; Returns a string without punctuation, non-alphanum characters, spelling mistakes"""
@@ -67,10 +55,16 @@ class CustomPreprocessor(TransformerMixin, BaseEstimator):
 
         #choice to spellcheck or not
         if spellcheck:
-            clean_funcs = [CustomPreprocessor.remove_punc, CustomPreprocessor.remove_nonalpha, CustomPreprocessor.corrected, CustomPreprocessor.remove_accents]
+            clean_funcs = [Cleaner.remove_punc, Cleaner.remove_nonalpha, Cleaner.corrected, Cleaner.remove_accents]
         else:
-            clean_funcs = [CustomPreprocessor.remove_punc, CustomPreprocessor.remove_nonalpha, CustomPreprocessor.remove_accents]
+            clean_funcs = [Cleaner.remove_punc, Cleaner.remove_nonalpha, Cleaner.remove_accents]
 
         for func in clean_funcs:
             text = func(text)
         return text.strip(" ")
+
+#if __name__ == '__main__':
+
+    #cleaner = Cleaner()
+    #print(cleaner.clean_ocr_text(text="oeuf, viande", spellcheck=None))
+
